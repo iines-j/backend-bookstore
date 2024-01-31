@@ -57,12 +57,25 @@ public class BookController {
 		model.addAttribute("book", new Book());
 		return "addBook";
 	}
-	
 	// SAVE ADDED BOOK
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	public String save(Book book) {
 		repository.save(book);
 		return "redirect:bookList";
 	}
+
 	
+	// EDIT BOOK
+	@RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
+	public String editBook(@PathVariable("id") Long id, Model model, Book book) {
+		model.addAttribute("book", repository.findById(id));
+		return "editBook";
+	}
+	// SAVE EDITED BOOK
+	@RequestMapping(value="/saveEdit", method=RequestMethod.POST)
+	public String saveEdit(Book book) {
+		repository.save(book);
+		return "redirect:bookList";
+	}
+
 }
