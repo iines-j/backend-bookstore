@@ -8,7 +8,7 @@
 		<h3>Add book</h3>
 
 		<div>
-			<form th:object="${book}" th:action="@{../saveEdit}" action="#" method="post">
+			<form th:object="${book}" th:action="@{../save}" action="#" method="post">
 				<input type="hidden" id="id" th:field="*{id}"/>
 			
 				<label for="author">Author</label>
@@ -22,6 +22,9 @@
 				
 				<label for="publicationYear">Year</label>
 				<input type="text" th:field="*{publicationYear}"/>
+				
+				<label for="category">Category</label>
+				<input type="text" th:field="*{category}"/>
 				
 				<input type="submit" value="Save Edit"/>
 			</form>

@@ -1,6 +1,8 @@
 package k24.Bookstore.domain;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
@@ -17,14 +19,19 @@ public class Book {
 	private String isbn;
 	// private double price;
 	
+	@ManyToOne
+	@JoinColumn(name="categoryid")
+	private Category category;
+	
 	public Book() {}
 	
 	//  double price 		this.price = price;
-	public Book(String title, String author, String publicationYear, String isbn) {
+	public Book(String title, String author, String publicationYear, String isbn, Category category) {
 		this.title = title;
 		this.author = author;
 		this.publicationYear = publicationYear;
 		this.isbn = isbn;
+		this.category = category;
 	}
 	
 	public Long getId() {
@@ -60,5 +67,12 @@ public class Book {
 	}
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
+	}
+	
+	public Category getCategory() {
+		return this.category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 }
