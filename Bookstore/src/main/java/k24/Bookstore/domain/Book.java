@@ -3,6 +3,8 @@ import jakarta.persistence.*;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
@@ -13,9 +15,20 @@ public class Book {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private String title;
+	@NotEmpty(message="Author cannot be empty")
+	@Size(min = 2, max = 250)
 	private String author;
+	
+	@NotEmpty(message="Title cannot be empty")
+	@Size(min = 2, max = 250)
+	private String title;
+	
+	@NotEmpty(message="Year cannot be empty")
+	@Size(min = 2, max = 250)
 	private String publicationYear;
+
+	@NotEmpty(message="ISBN cannot be empty")
+	@Size(min = 2, max = 250)
 	private String isbn;
 	// private double price;
 	

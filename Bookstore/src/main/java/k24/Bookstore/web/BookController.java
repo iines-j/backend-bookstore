@@ -1,18 +1,19 @@
 package k24.Bookstore.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.validation.Valid;
 import k24.Bookstore.domain.Book;
 import k24.Bookstore.domain.BookRepository;
-import k24.Bookstore.domain.Category;
 import k24.Bookstore.domain.CategoryRepository;
 
 @Controller
@@ -53,13 +54,18 @@ public class BookController {
 		model.addAttribute("categories", crepository.findAll());
 		return "addBook";
 	}
-	// SAVE ADDED BOOK
-	@RequestMapping(value="/save", method=RequestMethod.POST)
-	public String save(Book book) {
+	
+	// SAVE BOOK
+	@PostMapping("/save")
+	public String save(@Valid @ModelAttribute("book") Book book, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("editBook", book);
+			model.addAttribute("categories", crepository.findAll());
+			return "addBook";
+		}
 		repository.save(book);
 		return "redirect:bookList";
 	}
-	
 	
 	// EDIT BOOK
 	@RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
