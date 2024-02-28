@@ -1,12 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Booklist</title>
 	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}"/>
+	<style>
+		.flex-container {
+		  display: flex;
+		  flex-wrap: nowrap;
+		}
+	</style>
 </head>
 	<body>
-		<h3>Booklist</h3>
+
+		<div class="flex-container" style="justify-content:space-between">
+			<h3>Booklist</h3>
+			<span style="margin:auto;margin-right:5px">
+				Logged in as 
+				<span sec:authentication="name"></span>
+			</span>
+		</div>
+
 
 		<table class="table table-striped">
 			<tr>
@@ -28,7 +43,13 @@
 				<td><a th:href="@{/edit/{id}(id=${book.id})}" class="btn btn-info">Edit</a></td>
 			</tr>
 		</table>
-		<a href="/add" class="btn btn-success">Add Book</a>
-	
+		
+		<div class="flex-container">
+			<a href="/add" class="btn btn-success"  style="margin-right:5px;margin-left:5px">Add Book</a>
+			<form th:action="@{/logout}" method="post" style="margin-right:5px;margin-left:5px">
+	            <input type="submit" value="Log Out" class="btn btn-secondary"/>
+	        </form>
+		</div>
+
 	</body>
 </html>
